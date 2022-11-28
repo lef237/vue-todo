@@ -7,14 +7,17 @@ const app = Vue.createApp({
   }),
   methods: {
     addTask: function (event) {
-      // console.log('Clicked!')
       if (this.newTask === "") return;
       let todo = {
         task: this.newTask,
+        isDone: false
       };
       this.todos.push(todo);
       this.newTask = "";
     },
+    deleteTask: function(index) {
+      this.todos.splice(index, 1)
+    }
   },
 });
 app.mount("#app");

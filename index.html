@@ -17,22 +17,20 @@
       <input type="text" v-model="newTask">
       <button v-on:click="addTask">登録</button>
     </form>
-    <pre>{{ $data }}</pre>
     <h3>タスク一覧</h3>
     <ul>
-      <li>
-        <input type="checkbox">
-        <span>部屋の掃除をする。</span>
-        <button>編集する</button>
-        <button>削除する</button>
-      </li>
-      <li>
-        <input type="checkbox">
-        <span>スーパーへ買い物に行く。</span>
-        <button>編集する</button>
-        <button>削除する</button>
+      <li v-for="(todo, index) in todos">
+        <input type="checkbox" v-model="todo.isDone">
+        <span v-bind:class="{ done: todo.isDone }">
+          {{ todo.task }}
+        </span>
+        <button v-on:click="deleteTask(index)">
+          Delete
+        </button>
       </li>
     </ul>
+    <pre>{{ $data }}</pre>
+
   </div>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="./main.js"></script>
