@@ -1,12 +1,17 @@
 /* eslint-disable prefer-const */
 // eslint-disable-next-line no-undef
 const app = Vue.createApp({
-  data: () => ({
-    newTask: "",
-    todos: [],
-  }),
+  data() {
+    return {
+      newTask: "",
+      todos: [],
+    };
+  },
+  mounted() {
+    this.todos = JSON.parse(localStorage.getItem("todos") || "[]");
+  },
   methods: {
-    addTask: function (event) {
+    addTask() {
       if (this.newTask === "") return;
       let todo = {
         task: this.newTask,
@@ -16,15 +21,17 @@ const app = Vue.createApp({
       this.todos.push(todo);
       this.newTask = "";
     },
-    deleteTask: function (index) {
+    deleteTask(index) {
       this.todos.splice(index, 1);
     },
     updateTask(index) {
       this.todos[index].isEditing = true;
-      // this.todos[index].task
     },
     updateDone(index) {
       this.todos[index].isEditing = false;
+    },
+    setTasks() {
+      localStorage.setItem("todos", JSON.stringify(this.todos));
     },
   },
 });
