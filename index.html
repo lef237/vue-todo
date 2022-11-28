@@ -20,13 +20,24 @@
     <h3>タスク一覧</h3>
     <ul>
       <li v-for="(todo, index) in todos">
-        <input type="checkbox" v-model="todo.isDone">
-        <span v-bind:class="{ done: todo.isDone }">
-          {{ todo.task }}
-        </span>
-        <button v-on:click="deleteTask(index)">
-          Delete
-        </button>
+        <div v-if="!todo.isEditing">
+          <input type="checkbox" v-model="todo.isDone">
+          <span v-bind:class="{ done: todo.isDone }">
+            {{ todo.task }}
+          </span>
+          <button v-on:click="deleteTask(index)">
+            削除
+          </button>
+          <button v-on:click="updateTask(index)">
+            編集
+          </button>
+        </div>
+        <div v-if="todo.isEditing">
+          <span>
+            <input type="text" v-model="todo.task">
+            <button v-on:click="updateDone(index)">更新</button>
+          </span>
+        </div>
       </li>
     </ul>
     <pre>{{ $data }}</pre>
