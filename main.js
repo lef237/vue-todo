@@ -13,7 +13,7 @@ const app = Vue.createApp({
   methods: {
     addTask() {
       if (this.newTask === "") return;
-      let todo = {
+      const todo = {
         task: this.newTask,
         isDone: false,
         isEditing: false,
