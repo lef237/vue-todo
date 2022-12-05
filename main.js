@@ -20,17 +20,17 @@ const app = Vue.createApp({
       };
       this.todos.push(todo);
       this.newTask = "";
+      localStorage.setItem("todos", JSON.stringify(this.todos));
     },
     deleteTask(index) {
       this.todos.splice(index, 1);
+      localStorage.setItem("todos", JSON.stringify(this.todos));
     },
     updateTask(index) {
       this.todos[index].isEditing = true;
     },
     updateDone(index) {
       this.todos[index].isEditing = false;
-    },
-    setTasks() {
       localStorage.setItem("todos", JSON.stringify(this.todos));
     },
   },
