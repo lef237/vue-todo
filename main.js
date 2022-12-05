@@ -31,7 +31,6 @@ const app = Vue.createApp({
       this.todos[index].isEditing = false;
     },
   },
-  // あとで新しくこの部分を変更したPull Request上げる
   watch: {
     todos: {
       handler(val, oldval) {
