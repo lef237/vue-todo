@@ -20,18 +20,24 @@ const app = Vue.createApp({
       };
       this.todos.push(todo);
       this.newTask = "";
-      localStorage.setItem("todos", JSON.stringify(this.todos));
     },
     deleteTask(index) {
       this.todos.splice(index, 1);
-      localStorage.setItem("todos", JSON.stringify(this.todos));
     },
     updateTask(index) {
       this.todos[index].isEditing = true;
     },
     updateDone(index) {
       this.todos[index].isEditing = false;
-      localStorage.setItem("todos", JSON.stringify(this.todos));
+    },
+  },
+  // あとで新しくこの部分を変更したPull Request上げる
+  watch: {
+    todos: {
+      handler(val, oldval) {
+        localStorage.setItem("todos", JSON.stringify(this.todos));
+      },
+      deep: true,
     },
   },
 });
