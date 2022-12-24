@@ -1,38 +1,49 @@
 /* eslint-disable prefer-const */
 // eslint-disable-next-line no-undef
-const app = Vue.createApp({
-  data() {
-    return {
-      newTask: "",
-      todos: [],
-    };
-  },
-  mounted() {
-    this.todos = JSON.parse(localStorage.getItem("todos") || "[]");
-  },
-  methods: {
-    addTask() {
-      if (this.newTask === "") return;
+import { createApp, ref, onMounted } from "vue";
+
+const app = createApp({
+  setup() {
+    const newTask = ref("");
+    const todos = ref([]);
+    onMounted(() => {
+      todos.value = JSON.parse(localStorage.getItem("todos") || "[]");
+    });
+
+    const addTask = () => {
+      if (newTask.value === "") return;
       const todo = {
-        task: this.newTask,
+        task: newTask.value,
         isDone: false,
         isEditing: false,
       };
-      this.todos.push(todo);
-      this.newTask = "";
-      localStorage.setItem("todos", JSON.stringify(this.todos));
-    },
-    deleteTask(index) {
-      this.todos.splice(index, 1);
-      localStorage.setItem("todos", JSON.stringify(this.todos));
-    },
-    updateTask(index) {
-      this.todos[index].isEditing = true;
-    },
-    updateDone(index) {
-      this.todos[index].isEditing = false;
-      localStorage.setItem("todos", JSON.stringify(this.todos));
-    },
+      todos.value.push(todo);
+      newTask.value = "";
+      localStorage.setItem("todos", JSON.stringify(todos.value));
+    };
+
+    const deleteTask = (index) => {
+      todos.value.splice(index, 1);
+      localStorage.setItem("todos", JSON.stringify(todos.value));
+    };
+
+    const updateTask = (index) => {
+      todos.value[index].isEditing = true;
+    };
+
+    const updateDone = (index) => {
+      todos.value[index].isEditing = false;
+      localStorage.setItem("todos", JSON.stringify(todos.value));
+    };
+
+    return {
+      newTask,
+      todos,
+      addTask,
+      deleteTask,
+      updateTask,
+      updateDone,
+    };
   },
 });
 app.mount("#app");
