@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VueのTodoアプリ（Composition API版）</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div id="app">
+    <h2>VueのTodoアプリ</h2>
+    <h3>新規タスクを登録</h3>
+    <form v-on:submit.prevent>
+      <input type="text" v-model="newTask">
+      <button v-on:click="addTask">登録</button>
+    </form>
+    <h3>タスク一覧</h3>
+    <ul>
+      <li v-for="(todo, index) in todos">
+        <div v-if="!todo.isEditing">
+          <input type="checkbox" v-model="todo.isDone">
+          <span v-bind:class="{ done: todo.isDone }">
+            {{ todo.task }}
+          </span>
+          <button v-on:click="deleteTask(index)">
+            削除
+          </button>
+          <button v-on:click="updateTask(index)">
+            編集
+          </button>
+        </div>
+        <div v-if="todo.isEditing">
+          <span>
+            <input type="text" v-model="todo.task">
+            <button v-on:click="updateDone(index)">更新</button>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <script type="importmap">
+    { "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+    } }
+  </script>
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>
